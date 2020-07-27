@@ -24,6 +24,7 @@ class Painel extends Component {
         });
         return (<div>
             <Link to={'/sobre'}>Sobre</Link>
+            <Link to={'/cadastro'}>Cad</Link>
            {mapea}
            <Carro {...carroSelecionado}></Carro>
         </div>);
