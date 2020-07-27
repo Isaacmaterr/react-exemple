@@ -8,8 +8,6 @@ export function getInitialFetch(data = 'Leonan Luppi') {
 }
 
 export function sendServer(data) {
-    console.log(data['name']);
-    console.log(SEND_SERVER);
     return {
         type: SEND_SERVER,
         payload:{ name: data['name'] }

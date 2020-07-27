@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import Lista from './Lista'
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { clickButton } from './actions';
-import {Cep} from './factore/cep';
-
-
+import { clickButton, clickButtonCep } from './actions/click';
 
 class Carro extends Component {
     state = {}
     constructor(props) {
         super(props);
-        console.log(Cep('787855'));
         this.state = {
-            inputValue:'',
+            inputValue: '',
             lista: [],
             nomecomprador: ''
         }
@@ -33,8 +28,9 @@ class Carro extends Component {
     }
 
     render() {
-        const { nomecomprador, lista ,inputValue} = this.state;
-        const { nome, valor, newValue,clickButton } = this.props;
+        const { nomecomprador, lista, inputValue, cep } = this.state;
+        const { nome, valor, newValue, clickButton, clickButtonCep,newEndereco } = this.props;
+        console.log(newEndereco);
         return (
             <div>
                 <p>Comprador:{nomecomprador}</p>
@@ -48,7 +44,21 @@ class Carro extends Component {
                     value={inputValue}
                 />
                 <button onClick={() => clickButton(inputValue)}>Obser</button>
+
+
+
+
                 <p>intereces:{newValue}</p>
+
+
+                <input
+                    onChange={this.inputchange}
+                    type='text'
+                    name='cep'
+                    value={cep}
+                />
+                <button onClick={() => clickButtonCep(cep)}>Cep</button>
+                <p>Endereco:{newEndereco?.endereco}</p>
                 <button onClick={this.comprar}>COMPRAR </button>
                 <Lista lista={lista}></Lista>
             </div>
@@ -56,8 +66,16 @@ class Carro extends Component {
     }
 }
 const mapStateToProps = store => ({
-    newValue: store.clickState.newValue
+    newValue: store.clickState.newValue,
+    newEndereco: store.clickCep.newValue
 });
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ clickButton }, dispatch);
-export default connect(mapStateToProps,mapDispatchToProps)(Carro);
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        clickButtonCep: (data) => dispatch(clickButtonCep(data)),
+        clickButton:(data)=>dispatch(clickButton(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Carro);
